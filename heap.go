@@ -33,6 +33,19 @@ func (h *Heap) Len() int {
 	return len(h.data)
 }
 
+func (h *Heap) Push(v int) {
+	h.data = append(h.data, v)
+	h.up(h.Len() - 1)
+}
+
+func (h *Heap) Pop() int {
+	minVal := h.data[0]
+	h.swap(0, h.Len()-1)
+	h.data = h.data[:h.Len()-1]
+	h.down(0)
+	return minVal
+}
+
 func (h *Heap) isInBound(index int) bool {
 	return index >= 0 && index < h.Len()
 }
