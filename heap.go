@@ -1,44 +1,48 @@
 package heap
 
-type Strategy interface {
-	ShouldSwap(parent, child int) bool
+type Strategy[T INumbers] interface {
+	ShouldSwap(parent, child T) bool
 }
 
-type MinHeapStrategy struct{}
+type MinHeapStrategy[T INumbers] struct{}
 
-func (MinHeapStrategy) ShouldSwap(parent, child int) bool {
+func (MinHeapStrategy[T]) ShouldSwap(parent, child T) bool {
 	return parent > child
 }
 
-type MaxHeapStrategy struct{}
+type MaxHeapStrategy[T INumbers] struct{}
 
-func (MaxHeapStrategy) ShouldSwap(parent, child int) bool {
+func (MaxHeapStrategy[T]) ShouldSwap(parent, child T) bool {
 	return parent < child
 }
 
-type Heap struct {
-	data     []int
-	strategy Strategy
+type INumbers interface {
+	int | float64
 }
 
-func NewMinHeap() *Heap {
-	return &Heap{data: nil, strategy: MinHeapStrategy{}}
+type Heap[T INumbers] struct {
+	data     []T
+	strategy Strategy[T]
 }
 
-func NewMaxHeap() *Heap {
-	return &Heap{data: nil, strategy: MaxHeapStrategy{}}
+func NewMinHeap[T INumbers]() *Heap[T] {
+	return &Heap[T]{data: nil, strategy: MinHeapStrategy[T]{}}
 }
 
-func (h *Heap) Len() int {
+func NewMaxHeap[T INumbers]() *Heap[T] {
+	return &Heap[T]{data: nil, strategy: MaxHeapStrategy[T]{}}
+}
+
+func (h *Heap[T]) Len() int {
 	return len(h.data)
 }
 
-func (h *Heap) Push(v int) {
+func (h *Heap[T]) Push(v T) {
 	h.data = append(h.data, v)
 	h.up(h.Len() - 1)
 }
 
-func (h *Heap) Pop() int {
+func (h *Heap[T]) Pop() T {
 	minVal := h.data[0]
 	h.swap(0, h.Len()-1)
 	h.data = h.data[:h.Len()-1]
@@ -46,22 +50,22 @@ func (h *Heap) Pop() int {
 	return minVal
 }
 
-func (h *Heap) isInBound(index int) bool {
+func (h *Heap[T]) isInBound(index int) bool {
 	return index >= 0 && index < h.Len()
 }
 
-func (h *Heap) swap(i, j int) {
+func (h *Heap[T]) swap(i, j int) {
 	h.data[i], h.data[j] = h.data[j], h.data[i]
 }
 
-func (h *Heap) up(i int) {
+func (h *Heap[T]) up(i int) {
 	for i > 0 && h.strategy.ShouldSwap(h.data[(i-1)/2], h.data[i]) {
 		h.swap(i, (i-1)/2)
 		i = (i - 1) / 2
 	}
 }
 
-func (h *Heap) down(i int) {
+func (h *Heap[T]) down(i int) {
 	for {
 		left, right := 2*i+1, 2*i+2
 		minIndex := i

@@ -7,19 +7,19 @@ import (
 func TestHeap(t *testing.T) {
 	tests := []struct {
 		name     string
-		heap     *Heap
+		heap     *Heap[int]
 		input    []int
 		expected []int
 	}{
 		{
 			name:     "Test MinHeap",
-			heap:     NewMinHeap(),
+			heap:     NewMinHeap[int](),
 			input:    []int{5, 2, 6, 1, 3, 4},
 			expected: []int{1, 2, 3, 4, 5, 6},
 		},
 		{
 			name:     "Test MaxHeap",
-			heap:     NewMaxHeap(),
+			heap:     NewMaxHeap[int](),
 			input:    []int{1, 3, 5, 2, 6, 4},
 			expected: []int{6, 5, 4, 3, 2, 1},
 		},
