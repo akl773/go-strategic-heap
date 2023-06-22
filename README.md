@@ -1,6 +1,6 @@
-# Strategic-Heap-Go
+# Go-Strategic-Heap
 
-Strategic-Heap-Go is a powerful and efficient Go library that implements heap data structures. It provides support for both min-heap and max-heap strategies, making it an ideal choice for projects that require priority queues or heap sorts. With its simple API and high-performance operations, Strategic-Heap-Go makes it easy to create and manipulate heaps.
+Go-Strategic-Heap is a powerful and efficient Go library that implements heap data structures. It provides support for both min-heap and max-heap strategies, making it an ideal choice for projects that require priority queues or heap sorts. With its simple API and high-performance operations, Strategic-Heap-Go makes it easy to create and manipulate heaps.
 
 ## Features
 
